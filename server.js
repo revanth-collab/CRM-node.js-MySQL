@@ -13,6 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 // Connect to MySQL Database
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
@@ -21,7 +22,7 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
     ssl: {
-        ca: fs.readFileSync(__dirname + '/certs/ca-certificate.crt'),
+        ca: Buffer.from(process.env.CA_CERT, 'base64').toString('utf-8'),
         rejectUnauthorized: true
     },
     waitForConnections: true,
